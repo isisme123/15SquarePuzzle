@@ -1,6 +1,7 @@
 package com.example.a15_squarepuzzle;
 
 public class Game {
+    //2-D array of square objects.
     private Square[][] squares;
 
     public Game() {
@@ -16,6 +17,8 @@ public class Game {
         public Square getSquare(int i, int j){
         return squares[i][j];
         }
+
+        //moves the square at the chosen position if possible.
         public boolean move(int row, int col) {
             if (row > 0 && squares[row - 1][col].isEmpty()) {
                 swap(row, col, row - 1, col);
@@ -33,23 +36,38 @@ public class Game {
             return false;
         }
 
+        //Swap the square chosen with another square at that position.
         private void swap(int row1, int col1, int row2, int col2) {
             Square temp = squares[row1][col1];
             squares[row1][col1] = squares[row2][col2];
             squares[row2][col2] = temp;
         }
 
-        // Add a method to check if the game is won
-    //public boolean isWon(){
-       // if (squares[squares.length -1] != 0){
-            //return false;
-           // for (int i = numSquares - 1; i >= 0; i--){
-               // if (squares[i] != i + 1){
-              //      return false;
-              //  }
-          // }
+        // check if the game is won
+   // public boolean isWon(){
+     //   if (squares[squares.length -1] != 0){
+       //     return false;
+         //   for (int i = numSquares - 1; i >= 0; i--){
+           //     if (squares[i] != i + 1){
+             //       return false;
+               // }
+           //}
         //}
+        //return false;
     //}
+
+    //check if square values are in ascending order.
+    public boolean isWon(){
+        int count = 1;
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                if(getSquare(i,j).getValue() != count++){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     }
 
 
