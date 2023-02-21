@@ -24,8 +24,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         buttonLayout = findViewById(R.id.buttonLayout);
+
+        //adding a vertical linear layout everytime
+        for(int i =0; i < 5; i++){
+            //buttonLayout.add(new LinearLayout(VERTICAL));
+            buttonLayout.setOrientation(LinearLayout.VERTICAL);
+
+        }
         newGameButton = findViewById(R.id.newGameButton);
 
         //generating random numbers
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    //loops through rows and columns and update the value.
+    //loops through rows and columns and update the value of each square
     private void updateGrid() {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
