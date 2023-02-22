@@ -3,34 +3,39 @@ package com.example.a15_squarepuzzle;
 import android.util.Log;
 import android.view.View;
 
-public class Square implements View.OnClickListener{
-    public boolean isButtonClicked = false;
-    //value field that represent the number on the square.
+public class Square {
+
     private int value;
+    private int row;
+    private int column;
 
-    //constructor, sets value of the square to value.
-    public Square(int value) {
+    public Square(int value, int row, int column) {
         this.value = value;
-
+        this.row = row;
+        this.column = column;
     }
 
-    //gets the number on the square.
     public int getValue() {
         return value;
     }
 
-    public int setValue(int value){
-        return value = value;
-    };
-
-    //returns true if the square is empty.
-    public boolean isEmpty() {
-        return value == 0;
+    public void setValue(int value) {
+        this.value = value;
     }
 
-    @Override
-    public void onClick(View view) {
-        Log.d("button", "button");
-        isButtonClicked = true;
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
     }
 }
