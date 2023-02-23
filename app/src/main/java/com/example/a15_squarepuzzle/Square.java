@@ -15,6 +15,7 @@ public class Square {
         this.column = column;
     }
 
+
     public int getValue() {
         return value;
     }
@@ -37,5 +38,9 @@ public class Square {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+
+    public boolean isEmpty() {
+        return value == 0;
     }
 }
