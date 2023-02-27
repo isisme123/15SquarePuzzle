@@ -4,43 +4,17 @@ import android.util.Log;
 import android.view.View;
 
 public class Square {
+    private String text;
 
-    private int value;
-    private int row;
-    private int column;
-
-    public Square(int value, int row, int column) {
-        this.value = value;
-        this.row = row;
-        this.column = column;
+    public Square(String text) {
+        this.text = text;
     }
 
-
-    public int getValue() {
-        return value;
+    public String getText() {
+        return text;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getColumn() {
-        return column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
-    public boolean isEmpty() {
-        return value == 0;
+    public void setText(String text) {
+        this.text = text;
     }
 }
