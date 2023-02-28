@@ -1,3 +1,7 @@
+/*Author Name: Isaela Timogene-Julien
+* Date: February 28, 2022
+* Enhancement: none */
+
 package com.example.a15_squarepuzzle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,19 +26,22 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    //creating the instance variables for this class
     private Game game;
     private TextView movesText;
     private Button[] buttons;
 
     @Override
+    //OnCreate method to create instance of game class
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //instance of game class
         game = new Game(4);
         movesText = findViewById(R.id.movesText);
-        buttons = new Button[16];
-
+        buttons = new Button[16]; //creating 16 buttons
+        //setting button ids to variables
         buttons[0] = findViewById(R.id.button1);
         buttons[1] = findViewById(R.id.button2);
         buttons[2] = findViewById(R.id.button3);
@@ -53,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         buttons[15] = findViewById(R.id.button16);
 
         createGrid();
-
+        //onclick listener to swap buttons on click
         for (Button button : buttons) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,61 +71,67 @@ public class MainActivity extends AppCompatActivity {
                     int y = position % game.getSize();
                     int emptyX = game.getEmptyX();
                     int emptyY = game.getEmptyY();
-                    if ((x == emptyX && Math.abs(y - emptyY) == 1) || (y == emptyY && Math.abs(x - emptyX) == 1)) {
-                        game.swap(x, y); //emptyX, emptyY);
+                    if ((Math.abs(x - emptyX) == 1 && y == emptyY) || (Math.abs(y - emptyY) == 1 && x == emptyX)) {
+                        // swap the button text with the empty button text
+                        Button emptyButton = buttons[emptyX * game.getSize() + emptyY];
+                        String buttonText = button.getText().toString();
+                        button.setText(emptyButton.getText().toString());
+                        emptyButton.setText(buttonText);
+                        // update the game state and layout
+                        game.swap(x, y);
+                        //update the position of the empty button
+                        emptyX = x;
+                        emptyY = y;
                         updateLayout();
+                        //calls the isWon method
                         if (game.isWon()) {
                             Toast.makeText(MainActivity.this, "You win!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
-
             });
+
+
         }
 
-
+        //onClick listener to create reset button that calls shuffle and update the layout.
         Button newGameButton = findViewById(R.id.newGameButton);
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                game.shuffle();
-                updateLayout();
-                //createGrid();
+                game.shuffle(); //calls shuffle from game class
+                updateLayout(); //calls updateLayout method
             }
         });
     }
 
 //    void createGrid() {
-//        for (int i = 0; i < 15; i++) {
-//            buttons[i].setText(String.valueOf(i + 1));
+//        for (int i = 0; i < 16; i++) {
+//            buttons[i].setText(String.valueOf(game.getSquare(i / game.getSize(), i % game.getSize()).getText()));
 //        }
-//        //buttons[15].setText(""); //set the text of the empty square button to empty sting
-//        //buttons[15].setVisibility(View.GONE); // Hide the empty square
-//        buttons[game.size * game.size - 1] = findViewById(R.id.button16);
-//        buttons[game.size * game.size - 1].setText("");
-//
-//        //game.shuffle(); // Shuffle the game
-//
+//        // set the text of button16 to empty string and show it
+//        buttons[15].setText("");
+//        buttons[15].setVisibility(View.VISIBLE);
 //        updateLayout();
 //    }
-
-    void createGrid() {
-        for (int i = 0; i < 15; i++) {
-            buttons[i].setText(String.valueOf(i + 1));
-        }
-        // set the text of button16 to empty string and show it
-        buttons[15].setText("");
-        buttons[15].setVisibility(View.GONE);
-
-        // shuffle the game
-        game.shuffle();
-        updateLayout();
+void createGrid() {
+    //initialize 15 buttons for the game
+    for (int i = 0; i < 15; i++) {
+        buttons[i].setText(String.valueOf(game.getSquare(i / game.getSize(), i % game.getSize()).getText()));
     }
+    // set the text of the last button to empty string and show it
+    int lastIndex = buttons.length - 1;
+    buttons[lastIndex].setText("");
+    buttons[lastIndex].setVisibility(View.VISIBLE);
+    updateLayout(); //update the text of each button
+}
 
 
-    void updateLayout() {
+//updates the grid
+void updateLayout() {
         movesText.setText("Moves: " + game.getMoves());
 
+        //iterates over the 15 buttons and set texts to the corresponding square
         for (int i = 0; i < 15; i++) {
             Button button = buttons[i];
             int x = i / game.getSize();
@@ -127,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
             button.setText(square.getText());
         }
     }
-
 
 }
 
